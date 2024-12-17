@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="${event} ? @{/events/review/{eventId} (eventId=${event?.id})}">
+
+    <label>Comment: </label>
+    <input type="text" name="comment"/>
+    <br>
+
+    <label>Grade: </label>
+    <input type="number" name="grade"/>
+    <br>
+
+    <input type="submit" value="Submit"/>
+
+</form>
+</body>
+</html>

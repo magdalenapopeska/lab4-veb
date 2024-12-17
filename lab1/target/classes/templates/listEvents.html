@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:sec="">
+<head>
+    <meta charset="utf-8">
+    <title>Event Booking page - Welcome and choose an Event</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Welcome to our Event Booking App</h1>
+</header>
+<main>
+    <form method="get" action="">
+        <label>Search by name or description:</label>
+        <input type="text" name="search"/>
+        <br>
+        <label>Search by rating:</label>
+        <input type="number" name="rating" min="1" max="10"/>
+        <br/>
+        <button type="submit">Submit</button>
+    </form>
+
+    <form method="get" action="">
+        <label>Search by category:</label>
+        <input type="text" name="category"/>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <br>
+    <a href="/events/add-form">Add events</a>
+    <h2>Choose an event:</h2>
+    <!-- Display radio buttons for each event,
+            the value should be the event name
+            and the displayed text should be Name: <event_name>, Description: <event_description>, Rating: <popularity_score> -->
+    <form action="/eventBooking" method="post">
+        <div th:each="event : ${events}">
+            <input type="radio" name="event" th:value="${event.name}" th:text="|Name: ${event.name}, Description: ${event.description}, Rating: ${event.popularityScore} ,Location: ${event.getLocation().getName()}|"/>
+            <br>
+            <th:block sec:authorize="hasRole('ADMIN')">
+                <a th:href="@{/events/edit-form/{eventId} (eventId=${event?.id})}">Edit</a>
+                <a th:href="@{/events/delete/{eventId} (eventId=${event?.id})}">Delete</a>
+            </th:block>
+            <!--<a th:href="@{/events/review/{eventId} (eventId=${event?.id})}">Review</a>
+            -->
+        </div>
+        <h2>Choose number of tickets:</h2>
+        <input type="number" name="numTickets" min="1" max="10"><br/>
+        <br/>
+        <input type="submit" value="Submit">
+    </form>
+</main>
+<br>
+<br>
+<div>
+    <p>Search by location</p>
+    <form method="get" action="/events">
+        <select name="locationId">
+            <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}"></option>
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+</body>
+</html>

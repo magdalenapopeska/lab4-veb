@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="${event} ? @{/events/edit-form/{eventId} (eventId=${event?.id})} : @{/events/add-form}">
+    <label>Name: </label>
+    <input type="text" name="name" th:value="${event?.name}"/>
+    <br>
+
+    <label>Description: </label>
+    <input type="text" name="description" th:value="${event?.description}"/>
+    <br>
+
+    <label>Popularity Score: </label>
+    <input type="number" name="popularityScore" th:value="${event?.popularityScore}"/>
+    <br>
+
+    <select name="locationId">
+        <option th:each="location : ${locations}" th:value="${location.id}" th:text="${location.name}" th:selected="${event?.location?.id} == ${location.id}">
+        </option>
+    </select>
+    <br>
+
+    <input type="submit" value="Submit"/>
+
+</form>
+</body>
+</html>
